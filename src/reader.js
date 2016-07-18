@@ -17,6 +17,9 @@ function TestcaseReader(filename) {
   function onTestcase(callback) {
     testcaseFunc = callback;
   }
+  function onClose(callback) {
+    closeFunc = callback;
+  }
   function resume() {
     rl.resume();
   }
@@ -58,12 +61,18 @@ function TestcaseReader(filename) {
       bOutput = true;
     }
   });
+  rl.on("close", function() {
+    if (onClose) {
+      onClose.call(null);
+    }
+  });
   var caseIndex = 1;
   var title = null;
   var input = null;
   var output = [];
   var bOutput = false;
   var testcaseFunc = null;
+  var closeFunc = null;
 
   _.extend(this, {
     onTestcase: onTestcase,
