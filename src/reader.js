@@ -76,6 +76,7 @@ function TestcaseReader(filename) {
 
   _.extend(this, {
     onTestcase: onTestcase,
+    onClose: onClose,
     resume: resume
   });
 }

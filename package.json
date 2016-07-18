@@ -1,6 +1,6 @@
 {
   "name": "testcase-util",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Utility for mocha testcase",
   "main": "src/reader.js",
   "scripts": {
