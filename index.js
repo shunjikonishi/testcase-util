@@ -9,9 +9,8 @@ if (!filename) {
 }
 
 var reader = new TestcaseReader(filename);
-reader.onTestcase(testcase => {
+reader.testcases().forEach(testcase => {
   console.log("title", testcase.title);
   console.log("input", testcase.input);
   console.log("output", testcase.output);
 });
-reader.resume();

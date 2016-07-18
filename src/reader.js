@@ -1,7 +1,6 @@
 "use strict";
 
 var fs            = require("fs");
-var readline      = require("readline");
 var _             = require("lodash");
 var shellQuote    = require("shell-quote");
 var Testcase      = require("./testcase");
@@ -14,15 +13,6 @@ function TestcaseReader(filename) {
     }
     return str.trim();
   }
-  function onTestcase(callback) {
-    testcaseFunc = callback;
-  }
-  function onClose(callback) {
-    closeFunc = callback;
-  }
-  function resume() {
-    rl.resume();
-  }
   function isCodeSep(line) {
     return line.trim() === "```";
   }
@@ -34,18 +24,18 @@ function TestcaseReader(filename) {
       return v.op && v.pattern ? v.pattern : v;
     })
   }
-  var rs = fs.ReadStream(filename);
-  var rl = readline.createInterface({
-    input: rs,
-    output: {}
-  });
-  rl.on("line", function(line) {
+  function testcases() {
+    return result;
+  }
+  function init() {
+    var text = fs.readFileSync(filename, "utf-8");
+    text.split(/\r?\n/).forEach(onLine);
+  }
+  function onLine(line) {
     if (bOutput) {
       if (isCodeSep(line)) {
         bOutput = false;
-        if (testcaseFunc) {
-          testcaseFunc.call(null, new Testcase(getTitle(), getInput(), output));
-        }
+        result.push(new Testcase(getTitle(), getInput(), output));
         title = null;
         input = null;
         output = [];
@@ -60,24 +50,17 @@ function TestcaseReader(filename) {
     } else if (isCodeSep(line)) {
       bOutput = true;
     }
-  });
-  rl.on("close", function() {
-    if (onClose) {
-      onClose.call(null);
-    }
-  });
+  }
   var caseIndex = 1;
   var title = null;
   var input = null;
   var output = [];
   var bOutput = false;
-  var testcaseFunc = null;
-  var closeFunc = null;
+  var result = [];
 
+  init();
   _.extend(this, {
-    onTestcase: onTestcase,
-    onClose: onClose,
-    resume: resume
+    testcases: testcases
   });
 }
 
