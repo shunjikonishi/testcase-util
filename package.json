@@ -1,0 +1,23 @@
+{
+  "name": "testcase-util",
+  "version": "0.1.0",
+  "description": "Utility for mocha testcase",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shunjikonishi/testcase-util.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shunjikonishi/testcase-util/issues"
+  },
+  "homepage": "https://github.com/shunjikonishi/testcase-util#readme",
+  "dependencies": {
+    "lodash": "^4.13.1",
+    "shell-quote": "^1.6.1"
+  }
+}
